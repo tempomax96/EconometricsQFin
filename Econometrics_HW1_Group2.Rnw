@@ -1,0 +1,43 @@
+\documentclass{article}
+
+
+% packages:
+\usepackage{amsmath , amssymb , amsthm}
+\usepackage{a4wide}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{graphicx, verbatim}  
+
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Eps}{\mathcal{E}}
+\newcommand{\G}{\Gamma}
+\newcommand{\1}{\mathbb{1}}
+\newcommand{\V}{\mathbb{V}}
+
+
+\title{QFin - Econometrics 2 - Homework 1}
+\author{Group 2: Fojkar, Hrustsova, Kuttner, Merkinger, Sünderhauf}
+\begin{document}
+\setlength\parindent{0pt}
+\maketitle
+<<echo=FALSE>>=
+library(knitr)
+thm = knit_theme$get("night")  # parse the theme to a list
+knit_theme$set(thm)
+@
+
+
+\subsection*{Part A}
+\textbf{Estimate a simple regression of real investment (realinvs) on a constant and the nominal interest rate (90 day treasury bill rate; tbilrate).} \\\\
+<<echo=FALSE>>=
+df <- read.csv("Table F5-1.csv", sep = ";", header = TRUE)
+head(df)
+str(df)
+
+
+@
+
+
+
+\end{document}
