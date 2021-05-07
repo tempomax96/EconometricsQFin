@@ -71,4 +71,7 @@ summary(fit_b)
 \subsection*{Part E}
 \textbf{Use the results from (b) and check the implications 1-4 from section 1.1.2.}
 
+Textitext
+
+
 \end{document}
