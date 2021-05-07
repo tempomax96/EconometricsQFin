@@ -11,16 +11,16 @@
 }
 \makeatother
 
-\definecolor{fgcolor}{rgb}{0.941, 0.941, 0.973}
-\newcommand{\hlnum}[1]{\textcolor[rgb]{0.722,0.722,0.784}{#1}}%
-\newcommand{\hlstr}[1]{\textcolor[rgb]{0.941,0.941,0.973}{#1}}%
-\newcommand{\hlcom}[1]{\textcolor[rgb]{0.878,0.878,0.439}{#1}}%
-\newcommand{\hlopt}[1]{\textcolor[rgb]{0.941,0.941,0.973}{#1}}%
-\newcommand{\hlstd}[1]{\textcolor[rgb]{0.941,0.941,0.973}{#1}}%
-\newcommand{\hlkwa}[1]{\textcolor[rgb]{0,0.847,0.973}{#1}}%
-\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.733,0.667,1}{#1}}%
-\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.616,0,0.969}{#1}}%
-\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.8,0.4,0.8}{#1}}%
+\definecolor{fgcolor}{rgb}{0, 0, 0}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.502,0,0.502}{\textbf{#1}}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.651,0.522,0}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{1,0.502,0}{#1}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{1,0,0.502}{\textbf{#1}}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.733,0.475,0.467}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.502,0.502,0.753}{\textbf{#1}}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0,0.502,0.753}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0,0.267,0.4}{#1}}%
 \let\hlipl\hlkwb
 
 \usepackage{framed}
@@ -76,8 +76,88 @@
 
 
 \subsection*{Part A}
-\textbf{Estimate a simple regression of real investment (realinvs) on a constant and the nominal interest rate (90 day treasury bill rate; tbilrate).}
+\textbf{Estimate a simple regression of real investment (realinvs) on a constant and the nominal interest rate (90 day treasury bill rate; tbilrate).} \\\\
 
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.933, 0.933, 0.933}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{fit_a} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwc{data} \hlstd{= df,} \hlkwc{formula} \hlstd{= realinvs} \hlopt{~} \hlstd{tbilrate)}
+\hlkwd{summary}\hlstd{(fit_a)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = realinvs ~ tbilrate, data = df)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -427.2 -239.9 -188.1  152.9 1122.5 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  397.194     53.897   7.369  4.3e-12 ***
+## tbilrate      48.781      9.058   5.385  2.0e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 367.2 on 202 degrees of freedom
+## Multiple R-squared:  0.1255,	Adjusted R-squared:  0.1212 
+## F-statistic:    29 on 1 and 202 DF,  p-value: 2.001e-07
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection*{Part B}
+\textbf{Estimate a multiple regression of real investment (realinvs) on a constant, real GDP (realgdp), the nominal interest rate (90 day treasury bill rate; tbilrate) and the inflation rate (infl).}\\\\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.933, 0.933, 0.933}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{fit_b} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwc{data} \hlstd{= df,} \hlkwc{formula} \hlstd{= realinvs} \hlopt{~} \hlstd{realgdp} \hlopt{+} \hlstd{tbilrate} \hlopt{+} \hlstd{infl)}
+\hlkwd{summary}\hlstd{(fit_b)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = realinvs ~ realgdp + tbilrate + infl, data = df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -232.38  -39.88    6.61   32.37  289.45 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -1.532e+02  1.591e+01  -9.633  < 2e-16 ***
+## realgdp      1.856e-01  3.192e-03  58.158  < 2e-16 ***
+## tbilrate    -8.923e+00  2.912e+00  -3.064  0.00249 ** 
+## infl         1.234e+00  2.227e+00   0.554  0.58002    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 85.32 on 199 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.9532,	Adjusted R-squared:  0.9525 
+## F-statistic:  1350 on 3 and 199 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlcom{# 'infl' has no significant influence i.e. estimated coefficient is not }
+\hlcom{# significantly different from zero}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection*{Part C}
+\textbf{Interpret the coefficient/slope of tbilrate from (a).}\\\\
+
+\subsection*{Part D}
+\textbf{Consider the coefficient of tbilrate obtained from (b). Interpret that coefficient and try to 'explain' (to the extent possible) what determines the difference obtained from the coefficient in (a).}
+
+
+
+\subsection*{Part E}
+\textbf{Use the results from (b) and check the implications 1-4 from section 1.1.2.}
 
 \end{document}

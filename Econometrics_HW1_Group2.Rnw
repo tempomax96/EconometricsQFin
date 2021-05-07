@@ -21,23 +21,54 @@
 \begin{document}
 \setlength\parindent{0pt}
 \maketitle
-<<echo=FALSE>>=
+<<echo=FALSE, message=FALSE>>=
 library(knitr)
-thm = knit_theme$get("night")  # parse the theme to a list
+library(dplyr)
+library(magrittr)
+thm = knit_theme$get("acid")  # parse the theme to a list
 knit_theme$set(thm)
 @
 
 
 \subsection*{Part A}
 \textbf{Estimate a simple regression of real investment (realinvs) on a constant and the nominal interest rate (90 day treasury bill rate; tbilrate).} \\\\
-<<echo=FALSE>>=
-df <- read.csv("Table F5-1.csv", sep = ";", header = TRUE)
-head(df)
-str(df)
+<<echo=FALSE, warning=FALSE>>=
 
+# Read in the data
+df <- read.csv("Table F5-1.csv", sep = ";", header = TRUE) %>% as_tibble()
+# transform factor into numeric data type
+df <- df %>% mutate(infl=as.numeric(as.character(infl)) , realint=as.numeric(as.character(realint))) 
+
+@
+
+<<>>=
+fit_a <- lm(data = df, formula = realinvs ~ tbilrate)
+summary(fit_a)
+@
+
+
+\subsection*{Part B}
+\textbf{Estimate a multiple regression of real investment (realinvs) on a constant, real GDP (realgdp), the nominal interest rate (90 day treasury bill rate; tbilrate) and the inflation rate (infl).}\\\\
+
+<<>>=
+fit_b <- lm(data = df, formula = realinvs ~ realgdp + tbilrate + infl)
+summary(fit_b)
+
+# 'infl' has no significant influence i.e. estimated coefficient is not 
+# significantly different from zero
 
 @
 
 
+\subsection*{Part C}
+\textbf{Interpret the coefficient/slope of tbilrate from (a).}\\\\
+
+\subsection*{Part D}
+\textbf{Consider the coefficient of tbilrate obtained from (b). Interpret that coefficient and try to 'explain' (to the extent possible) what determines the difference obtained from the coefficient in (a).}
+
+
+
+\subsection*{Part E}
+\textbf{Use the results from (b) and check the implications 1-4 from section 1.1.2.}
 
 \end{document}
